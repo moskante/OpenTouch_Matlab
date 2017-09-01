@@ -23,39 +23,42 @@ function [out] = envelope_vibro_FT(freqSameAsSpeed, finalAmplitude, duration, si
 %example
 %c = envelope_vibro(100, 1, 0, 10, 2);  ooold
 
-%% generate sound for the different speeds (and distances?) beforehand
-load('sound_input')
-% load(f300,P1average300,...
-%      f900,P1average900,...
-%      f1600,P1average1600,...
-%      f2300,P1average2300,...
-%      f2900,P1average2900);
+%%ooold
+% % % % generate sound for the different speeds (and distances?) beforehand
+% % % load('sound_input')
+% % % load(f300,P1average300,...
+% % %      f900,P1average900,...
+% % %      f1600,P1average1600,...
+% % %      f2300,P1average2300,...
+% % %      f2900,P1average2900);
+% % % 
+% % % amplitudeAdjuster (for 5 bins)
+% % % with 5 recreated spectra
+% % % amplitudeAdjustment = [1 4.5 4.5 4.5 12];  
+% % % with 5 equidistant factors between the extrema
+% % % amplitudeAdjustment = linspace(1,12,5);   
+% % % 
+% % % % sorting 14 speeds and the standard speed into 5 bins
+% % % if freqSameAsSpeed == 300 || freqSameAsSpeed == 500     %300SP bin       
+% % %         freq = round(f300(f300>30)*10)/10;
+% % %         amplitude = P1average300(f300 > 30)*amplitudeAdjustment(1);
+% % %     elseif freqSameAsSpeed == 700 || freqSameAsSpeed == 900 || freqSameAsSpeed == 1100          %900SP bin
+% % %         freq = round(f900(f900>30)*10)/10;
+% % %         amplitude = P1average900(f900 > 30)*amplitudeAdjustment(2);
+% % %     elseif freqSameAsSpeed == 1300 || freqSameAsSpeed == 1500 || freqSameAsSpeed == 1600 || freqSameAsSpeed == 1700 || freqSameAsSpeed == 1900 %1600SP bin
+% % %         freq = round(f1600(f1600>30)*10)/10;
+% % %         amplitude = P1average1600(f1600 > 30)*amplitudeAdjustment(3);
+% % %     elseif freqSameAsSpeed == 2100 || freqSameAsSpeed == 2300 || freqSameAsSpeed == 2500        %2300SP bin
+% % %         freq = round(f2300(f2300>30)*10)/10;
+% % %         amplitude = P1average2300(f2300 > 30)*amplitudeAdjustment(4);
+% % %     elseif  freqSameAsSpeed == 2700 || freqSameAsSpeed == 2900     %2900SP bin
+% % %         freq = round(f2900(f2900>30)*10)/10;
+% % %         amplitude = P1average2900(f2900 > 30)*amplitudeAdjustment(5);
+% % % end
+% % % %%%%
 
-%amplitudeAdjuster (for 5 bins)
-%with 5 recreated spectra
-amplitudeAdjustment = [1 4.5 4.5 4.5 12];  
-% with 5 equidistant factors between the extrema
-%amplitudeAdjustment = linspace(1,12,5);   
-
-%% sorting 14 speeds and the standard speed into 5 bins
-if freqSameAsSpeed == 300 || freqSameAsSpeed == 500     %300SP bin       
-        freq = round(f300(f300>30)*10)/10;
-        amplitude = P1average300(f300 > 30)*amplitudeAdjustment(1);
-    elseif freqSameAsSpeed == 700 || freqSameAsSpeed == 900 || freqSameAsSpeed == 1100          %900SP bin
-        freq = round(f900(f900>30)*10)/10;
-        amplitude = P1average900(f900 > 30)*amplitudeAdjustment(2);
-    elseif freqSameAsSpeed == 1300 || freqSameAsSpeed == 1500 || freqSameAsSpeed == 1600 || freqSameAsSpeed == 1700 || freqSameAsSpeed == 1900 %1600SP bin
-        freq = round(f1600(f1600>30)*10)/10;
-        amplitude = P1average1600(f1600 > 30)*amplitudeAdjustment(3);
-    elseif freqSameAsSpeed == 2100 || freqSameAsSpeed == 2300 || freqSameAsSpeed == 2500        %2300SP bin
-        freq = round(f2300(f2300>30)*10)/10;
-        amplitude = P1average2300(f2300 > 30)*amplitudeAdjustment(4);
-    elseif  freqSameAsSpeed == 2700 || freqSameAsSpeed == 2900     %2900SP bin
-        freq = round(f2900(f2900>30)*10)/10;
-        amplitude = P1average2900(f2900 > 30)*amplitudeAdjustment(5);
-end
-%%%%%
-
+%dummy value for freq
+freq = 100;
 fs = 4000;          %sampling frequency
 
 %first we generate the vibration signal

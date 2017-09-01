@@ -1,4 +1,4 @@
-function [answer, accData, sampleFreq] = SSHMove_LMT(myLR, mySP, VF, VA, rfirst,...
+function [answer, accData, sampleFreq] = SSHMove_calibration(myLR, mySP, VF, VA, rfirst,...
     fingerFIG, blankFIG, p1, forceplate, serial_id, trial, accMeter)
 %
 % 2AFC Speed discrimination task
@@ -132,13 +132,13 @@ while(1)
         
         fprintf(serial_id, '%3u\t %4d\t %4d\t %4d\t %4d\t %1u\t %1u\t %.5f\t %.5f\t %4f\n', all_vals);
         
-        if(ti >= Vduration(interval) + 0.5)
+        if(ti >= Vduration(interval) + 0.75)         %the last added constant allows for an increased acc data recording window
             if showFigureBlank
                 figure(blankFIG)   %maybe "release finger" figure instead?
                 showFigureBlank = 0;
             end
             saveAccData = 0;
-            if round(DVi) == 0
+            if round(DVi) == 0          %schearforce reset security clause    
                 FirstInterval = now;    %sense?
                 incontact = 0;
                 ti = 0;
@@ -156,5 +156,6 @@ end
 %get the actual timespan in the 2 intervals of accData [in sec]
 accInervalIndex = find(accData==2,1);
 accDataTimespan = (accData(accInervalIndex-1,2)-accData(1,2)) + (accData(end,2)-accData(accInervalIndex,2));
-sampleFreq = length(accData)/accDataTimespan;
+sampleFreq = length(accData)/accDataTimespan
+intervalSizeRatio = accInervalIndex./length(accData)
 answer = 0;

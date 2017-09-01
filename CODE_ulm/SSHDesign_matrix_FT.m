@@ -1,10 +1,12 @@
 function desmat = SSHDesign_matrix_FT()
 
-allSP = 300:200:3000;  %14 different speeds from 300 to 2900 in 200's steps
+%7 different speeds from 300 to 4800 in 750's steps
+allSP = 300:750:4800;
+%[300  1050   800  2550  3300  4050  4800];
 allLR = [1 2 3];       %relative desired position (as different cases)
 
 %Warning: vibration amplitude also depends on the audio volume on the PC
-allVA = [0 1.0 2.0];   %final vibration amplitude multiplier 
+allVA = [1];   %final vibration amplitude multiplier 
 rfirst = [0 1];
 direction = [-1 1];
 

@@ -23,6 +23,8 @@ function [out] = envelope_vibro_FT(freq, amplitude, duration, silence)
 
 fs = 4000;          %sampling frequency
 
+%%%%%dummy var for freq
+
 %first we generate the vibration signal
 values=0:(1/fs):duration;
 for i = 1:length(freq)
