@@ -30,7 +30,7 @@ end
 
 OnlyOnce(1:N,6) = bsxfun(@times, OnlyOnce(1:N,6), OnlyOnce(1:N,5)); % multiplies the desired LR distance 
 OnlyOnce(1:N,7) = -bsxfun(@times, OnlyOnce(1:N,7), OnlyOnce(1:N,5));% with direction (-1 or 1)
-OnlyOnce(1:N,8) = repmat(median(allSP),N, 1);  % sets the speed of the comparion stimulus (1600)
+OnlyOnce(1:N,8) = repmat(median(allSP),N, 1);  % sets the speed of the comparion stimulus (2550)
 OnlyOnce(1:N,9) = OnlyOnce(1:N,8);         % !!!frequncies are now same as speeds!!!
 OnlyOnce(1:N,10) = OnlyOnce(1:N,1);
 
