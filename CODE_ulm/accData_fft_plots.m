@@ -1,4 +1,4 @@
-%% 
+%% trialswise recording quality check and amplitude spectrum plots
 % Specify the parameters of a signal with a sampling frequency and a signal duration
 
 % part = 800:930;
@@ -43,7 +43,7 @@ P1 = cat(2, P1X, P1Y, P1Z);
 % |P1|.
 f = Fs*(0:(L/2))/L;
 
-%%plots
+%% plots
 % line colors are x-axis(blue),y(red),z(yellow)
 figure
     subplot(2,1,1)  %time domain plot part
@@ -63,11 +63,12 @@ ylabel('|P1(f)|')
 % P1(f > 30);
 
 %save old stuff somehow
-temp1P1 = P1;
-temp1X = X;
+    temp5P1 = P1;
+%temp1X = X;
 
 
-% %filter test
+
+%% filter test
 %    d = fdesign.lowpass('Fp,Fst,Ap,Ast',3,5,0.5,40,100);
 %    Hd = design(d,'equiripple');
 %    output = filter(Hd,input);
