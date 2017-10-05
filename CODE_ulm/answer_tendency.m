@@ -4,7 +4,7 @@
 PilotNewSpeedFile   = 'felix_pilot_2_170926_1_responses.mat';
 
 PilotNewSpeedFile2 = 'felix_pilot_2_171003_2_responses.mat';
-
+PilotNewSpeedFile3 = 'felix_pilot_2_171004_3_responses.mat';
 
 outputPilot2Block1= fullfile('C:\Users\CecileScotto\Documents\MATLAB\Alessandro\DATA\Pilot 2', PilotNewSpeedFile);
 load(outputPilot2Block1);   % not: load('File')
@@ -16,6 +16,11 @@ load(outputPilot2Block2_3);   % not: load('File')
 outputPilot2Block2_3 = output;
 clear output;
 
+outputPilot2Block3 = fullfile('C:\Users\CecileScotto\Documents\MATLAB\Alessandro\DATA\Pilot 2', PilotNewSpeedFile3);
+load(outputPilot2Block3);   % not: load('File')
+outputPilot2Block3 = output;
+clear output;
+
 %% cutout training trials
 if length(outputPilot2Block1) ==341 || length(outputPilot2Block1) ==173     %cut irregular output files (training trials)
     outputPilot2Block1=outputPilot2Block1(6:end,:);
@@ -23,9 +28,12 @@ end
 if length(outputPilot2Block2_3) ==341 || length(outputPilot2Block2_3) ==173     %cut irregular output files (training trials)
     outputPilot2Block2_3=outputPilot2Block2_3(6:end,:);
 end
+if length(outputPilot2Block3) ==341 || length(outputPilot2Block2_3) ==173     %cut irregular output files (training trials)
+    outputPilot2Block3=outputPilot2Block3(6:end,:);
+end
 
 %% combine blocks
-outputPilot2combined = [outputPilot2Block1;outputPilot2Block2_3];
+outputPilot2combined = [outputPilot2Block1;outputPilot2Block2_3;outputPilot2Block3];
 
 %% generate swiched Answer Collumn
 swichedAnswerCollumn=ones(length(outputPilot2combined),1)*1000;
@@ -63,9 +71,9 @@ for s = 1:length(speedIndex)
 end 
 meanAnswerPilot2control=meanAnswerPilot2control-1;
 %mixed amplitude
-for t = 1:length(speedIndex)
-    trialIndexB = find(outputPilot2mixedAmplitude(:,4)==speedIndex(t));       
-    meanAnswerPilot2mixed(t) = mean(outputPilot2mixedAmplitude(trialIndexB,10)); 
+for v = 1:length(speedIndex)
+    trialIndexB = find(outputPilot2mixedAmplitude(:,4)==speedIndex(v));       
+    meanAnswerPilot2mixed(v) = mean(outputPilot2mixedAmplitude(trialIndexB,10)); 
 end 
 meanAnswerPilot2mixed=meanAnswerPilot2mixed-1;
 % full amplitude
@@ -75,12 +83,32 @@ for u = 1:length(speedIndex)
 end 
 meanAnswerPilot2full=meanAnswerPilot2full-1;
 
+%% mixed amplitude differentiation
+mixedStandardVibration=outputPilot2mixedAmplitude(find (outputPilot2mixedAmplitude(:,5)==1),:);
+mixedComparisonVibration=outputPilot2mixedAmplitude(find (outputPilot2mixedAmplitude(:,5)==0),:);
+
+%mixed amplitude standard stimulus has vibration
+for v = 1:length(speedIndex)
+    trialIndexStandard = find(mixedStandardVibration(:,4)==speedIndex(v));       
+    meanAnswerPilot2mixedStandard(v) = mean(mixedStandardVibration(trialIndexStandard,10)); 
+end 
+meanAnswerPilot2mixedStandard=meanAnswerPilot2mixedStandard-1;
+
+%mixed amplitude comparision stimulus has vibration
+for w = 1:length(speedIndex)
+    trialIndexComparison = find(mixedComparisonVibration(:,4)==speedIndex(w));       
+    meanAnswerPilot2mixedComparison(w) = mean(mixedComparisonVibration(trialIndexComparison,10)); 
+end 
+meanAnswerPilot2mixedComparison=meanAnswerPilot2mixedComparison-1;
+
+
 
 %% plots
 figure
 plot(speedIndex,meanAnswerPilot2control,'-ob')   %blue=control
 hold on 
-plot(speedIndex,meanAnswerPilot2mixed,'-og')     %green=mixed
+plot(speedIndex,meanAnswerPilot2mixedStandard,'-og')     %green=mixed
+plot(speedIndex,meanAnswerPilot2mixedComparison,'-oc')  %cyan
 plot(speedIndex,meanAnswerPilot2full,'-or')      %red=full amp
 ylim([0 1])
 xlim([200 1900])
@@ -90,6 +118,5 @@ xlim([200 1900])
 title('pilot2 (new speeds) all conditions results')
 xlabel('comparison speed')
 ylabel('was comparison speed faster than standard stimulus?')
-legend('control amplitude','mixed amplitude','full amplitude')
 hold off
-% legend('pilot control','pilot tractor')
+legend('no vibration (control)','only standard stimulus vibration','only comparison stimulus vibration','both intervals vibration')
